@@ -24,7 +24,7 @@ end_date: str = "20221231"
 base_url: str = "https://aqs.epa.gov/data/api/"
 all_data: List[Any] = []
 
-with open("county_level_pm25.csv", "w", newline='', encoding="utf-8") as f:
+with open("data/county_level_pm25.csv", "w", newline='', encoding="utf-8") as f:
     for i, state in enumerate(states, start=1):
         print(f"Processing state {i}/{len(states)}: {state}")
         #Get list of counties for this state
