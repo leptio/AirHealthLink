@@ -10,6 +10,8 @@ import numpy as np
 import geopandas as gpd
 from shapely.affinity import translate
 from shapely.geometry import Polygon, MultiPolygon
+import imageio
+from datetime import date, timedelta
 
 class Visualization:
     """Class responsible for graphing air quality data."""
@@ -66,25 +68,32 @@ class Visualization:
             counties.loc[counties['STATEFP']=='02', 'geometry'].apply(shift_only_far_east_alaska)
         # Prepare PM2.5 data: create FIPS code
         self.data['fips'] = self.data['state_code'].astype(str).str.zfill(2) + \
-                             self.data['county_code'].astype(str).str.zfill(3)
-
-        # Aggregate PM2.5 by county
-        pm25_county = self.data.groupby('fips')['arithmetic_mean'].mean().reset_index()
-
+                             self.data['county_code'].astype(str).str.zfill(3)   
         # Prepare counties for merge
         counties['fips'] = counties['STATEFP'] + counties['COUNTYFP']
+        start_date = date(2022, 1, 1)
+        day_count = 365
+        for single_date in (start_date + timedelta(n) for n in range(day_count)):
+            # Sort data by date
+            county_sorted = self.data[self.data['date_local']==single_date.strftime("%Y-%m-%d")]
+            # Aggregate PM2.5 by county
+            pm25_county = county_sorted.groupby('fips')['arithmetic_mean'].mean().reset_index()
+            print(single_date.strftime("%Y-%m-%d"))
+            # Merge PM2.5 data with county geometries
+            merged = counties.merge(pm25_county, on='fips', how='left')
 
-        # Merge PM2.5 data with county geometries
-        merged = counties.merge(pm25_county, on='fips', how='left')
+            # Plot
+            fig, ax = plt.subplots(figsize=(12, 8), dpi=3000)
+            merged.boundary.plot(ax=ax, linewidth=0.1, edgecolor='white')
+            merged.plot(column='arithmetic_mean', ax=ax, cmap='Reds', legend=True,
+                        missing_kwds={'color': 'black'}, linewidth=0)
 
-        # Plot
-        fig, ax = plt.subplots(figsize=(12, 8), dpi=3000)
-        merged.boundary.plot(ax=ax, linewidth=0.1, edgecolor='white')
-        merged.plot(column='arithmetic_mean', ax=ax, cmap='Reds', legend=True,
-                    missing_kwds={'color': 'black'}, linewidth=0)
+            # Aesthetic adjustments
+            ax.set_title(title, fontsize=14, color='white')
+            ax.axis('off')
+            fig.patch.set_facecolor('black')
+            #update save path
+            nsp: str = save_path + str(single_date) + ".png"
 
-        # Aesthetic adjustments
-        ax.set_title(title, fontsize=14, color='white')
-        ax.axis('off')
-        fig.patch.set_facecolor('black')
-        plt.savefig(save_path, dpi=3000, bbox_inches='tight')
+            plt.savefig(nsp, dpi=3000, bbox_inches='tight')
+            plt.close()

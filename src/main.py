@@ -16,9 +16,9 @@ def main() -> None:
     # Create visualization
     visualizer: Visualization = Visualization(df)
     local_save_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                                   "plots", "geographic_distribution.png")
+                                    "plots/frames", "geographic_distribution")
     visualizer.plot_cases_on_map(title="PM2.5 geographic distribution",
-                                 save_path=local_save_path)
+                                    save_path=local_save_path)
 
 if __name__ == "__main__":
     main()
