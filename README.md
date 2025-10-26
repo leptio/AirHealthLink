@@ -1,7 +1,7 @@
 # AirHealthLink
 
 AirHealthLink is a project dedicated to studying the various health effects of air pollution (PM2.5). 
-
+![Description](output.gif)
 ---
 
 
