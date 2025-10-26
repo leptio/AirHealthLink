@@ -26,7 +26,7 @@ def create_gif_3k4k(folder_in: str, output_file: str, target_size:tuple[any, any
         frames_resized = [Image.open(os.path.join(tmp_dir, f)) for f in resized_files]
 
         # Save GIF
-        print("Saving final GIF...")
+        print("Saving final GIF...") 
         frames_resized[0].save(
             output_file,
             save_all=True,

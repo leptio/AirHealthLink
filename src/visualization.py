@@ -12,6 +12,8 @@ from shapely.affinity import translate
 from shapely.geometry import Polygon, MultiPolygon
 import imageio
 from datetime import date, timedelta
+from matplotlib.colors import LinearSegmentedColormap, PowerNorm
+import os
 
 class Visualization:
     """Class responsible for graphing air quality data."""
@@ -73,6 +75,8 @@ class Visualization:
         counties['fips'] = counties['STATEFP'] + counties['COUNTYFP']
         start_date = date(2022, 1, 1)
         day_count = 365
+        vmin = self.data['arithmetic_mean'].min()
+        vmax = self.data['arithmetic_mean'].max()
         for single_date in (start_date + timedelta(n) for n in range(day_count)):
             # Sort data by date
             county_sorted = self.data[self.data['date_local']==single_date.strftime("%Y-%m-%d")]
@@ -81,18 +85,40 @@ class Visualization:
             print(single_date.strftime("%Y-%m-%d"))
             # Merge PM2.5 data with county geometries
             merged = counties.merge(pm25_county, on='fips', how='left')
+            # Nonlinear normalization to make red appear earlier
+            norm = PowerNorm(gamma=0.35, vmin=vmin, vmax=vmax, clip=True)
 
             # Plot
             fig, ax = plt.subplots(figsize=(12, 8), dpi=3000)
             merged.boundary.plot(ax=ax, linewidth=0.1, edgecolor='white')
-            merged.plot(column='arithmetic_mean', ax=ax, cmap='Reds', legend=True,
-                        missing_kwds={'color': 'black'}, linewidth=0)
+            merged.plot(
+                column='arithmetic_mean',
+                ax=ax,
+                cmap="Reds",
+                norm=norm,
+                legend=False,
+                vmin=vmin,
+                vmax=vmax,
+                missing_kwds={'color': 'black'},
+                linewidth=0
+            )
+                        
+            # Manual colorbar consistent with PowerNorm
+            sm = plt.cm.ScalarMappable(cmap='Reds', norm=norm)
+            sm._A = []  # required dummy array
+            sm.set_clim(0, vmax)
+            cbar = fig.colorbar(sm, ax=ax, fraction=0.03, pad=0.02)
+            cbar.set_label('PM2.5 (µg/m³)', color='white')
+            cbar.ax.yaxis.set_tick_params(color='white')
+            plt.setp(plt.getp(cbar.ax.axes, 'yticklabels'), color='white')
 
             # Aesthetic adjustments
-            ax.set_title(title, fontsize=14, color='white')
+            spec_title: str = title + " (" + str(single_date) + ")"
+            ax.set_title(spec_title, fontsize=14, color='white')
             ax.axis('off')
             fig.patch.set_facecolor('black')
             #update save path
+            save_path = os.path.normpath(save_path)
             nsp: str = save_path + str(single_date) + ".png"
 
             plt.savefig(nsp, dpi=3000, bbox_inches='tight')
