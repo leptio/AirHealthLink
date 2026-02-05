@@ -1,6 +1,7 @@
 # AirHealthLink
 
 AirHealthLink is a project dedicated to studying the link between economic condition and air pollution using publically-available levels of common pollutants (PM2.5). 
+
 ![AirHealthLink Demo](https://github.com/leptio/AirHealthLink/raw/main/output.gif)
 ---
 
