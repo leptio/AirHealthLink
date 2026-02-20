@@ -108,17 +108,14 @@ class PM25EconomicAnalyzer:
         print("  fips_col =", fips_col)
         print("  state_col =", state_col, "; county_col =", county_col)
 
-        # normalize PM2.5 DataFrame:
         pm2 = pm.copy()
         # parse dates
         if date_col:
             pm2["date"] = pd.to_datetime(pm2[date_col], errors="coerce")
         else:
-            # try to parse any column that looks like a date
             pm2["date"] = pd.to_datetime(
                 pm2.select_dtypes(include=["object"]).apply(
                     lambda x: x.astype(str)), errors="coerce")
-            # worst case: create index-based date if nothing works -> set NaT
             if pm2["date"].isna().all():
                 pm2["date"] = pd.NaT
 
@@ -205,7 +202,6 @@ class PM25EconomicAnalyzer:
                 return cand
             if cand_lower in cols_lower:
                 return cols_lower[cand_lower]
-        # substring match fallback
         for col in columns:
             for cand in candidates:
                 if cand.lower() in col.lower():
