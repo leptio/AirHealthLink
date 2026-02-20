@@ -23,8 +23,6 @@ Data is taken from all available counties on the [AQS API](https://aqs.epa.gov/a
 ---
 ## Aggregation
 
- Aggregation
-
 Daily PM2.5 data was aggregated to county-level summaries:
 
 Annual mean, median, standard deviation, 90th percentile,
