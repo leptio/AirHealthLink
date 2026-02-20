@@ -9,11 +9,9 @@ filepath = os.path.join(os.path.dirname(__file__), '../data/county_level_pm25.cs
 
 def main() -> None:
     """Main function to implement PM2.5 analysis."""
-    # Load data
     df: pd.DataFrame = pd.read_csv(filepath)
     print(df.head())
 
-    # Create visualization
     visualizer: Visualization = Visualization(df)
     local_save_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                     "plots/frames", "geographic_distribution")
