@@ -27,53 +27,53 @@ Data is taken from all available counties on the [AQS API](https://aqs.epa.gov/a
 
 Daily PM2.5 data was aggregated to county-level summaries:
 
-Annual mean, median, standard deviation, 90th percentile
+Annual mean, median, standard deviation, 90th percentile,
 
-Monthly averages
+Monthly averages,
 
 Seasonal averages (DJF, MAM, JJA, SON)
 
 Counts of days exceeding:
 
-12 μg/m³
+12 μg/m³,
 
-25 μg/m³
+25 μg/m³,
 
-35 μg/m³
+35 μg/m³,
 
 ---
 ## Statistical Analysis
 AirHealthLink performs the following analyses automatically:
 
-Correlation Analysis
+Correlation Analysis,
 
-Pearson correlation
+Pearson correlation,
 
-Spearman rank correlation
+Spearman rank correlation,
 
-Ordinary Least Squares (OLS)
+Ordinary Least Squares (OLS),
 
-Robust regression (Huber)
+Robust regression (Huber),
 
-Median quantile regression
+Median quantile regression,
 
 
 For income decile analysis:
 
-ANOVA
+ANOVA,
 
-Kruskal–Wallis test
+Kruskal–Wallis test,
 
-Spearman rank trend test
+Spearman rank trend test,
 
 Monthly and seasonal regressions
 
 
 Comparison of lowest and highest quintiles (extreme bin comparison) using:
 
-Welch’s t-test
+Welch’s t-test,
 
-Kolmogorov–Smirnov test
+Kolmogorov–Smirnov test,
 
 Bootstrap confidence intervals
 
