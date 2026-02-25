@@ -16,34 +16,29 @@ These results provide quantitative evidence of economic disparities in air pollu
 ---
 
 
-## Scope
+## Data Scope
 
 Data is taken from all available counties on the [AQS API](https://aqs.epa.gov/aqsweb/documents/data_api.html) from January 1, 2022 to December 31, 2022. 
 
 ---
 ## Aggregation
 
-Daily PM2.5 data was aggregated to county-level summaries:
+County-level PM2.5 data was aggregated to daily summaries:
 
-Annual mean, median, standard deviation, 90th percentile,
+Annual: mean, median, standard deviation, 90th percentile.
 
-Monthly averages,
+Monthly averages.
 
-Seasonal averages (DJF, MAM, JJA, SON)
+Seasonal averages: DJF, MAM, JJA, SON.
 
-Counts of days exceeding:
-
-12 μg/m³,
-
-25 μg/m³,
-
-35 μg/m³,
+Exceedance counts for thresholds of 12 μg/m³, 25 μg/m³, and 35 μg/m³.
 
 ---
-## Statistical Analysis
-AirHealthLink performs the following analyses automatically:
+## Analytical Methodology
 
-Correlation Analysis,
+AirHealthLink provides automated statistical workflows comprising of:
+
+**Correlation and Regression Analysis:**
 
 Pearson correlation,
 
@@ -53,10 +48,10 @@ Ordinary Least Squares (OLS),
 
 Robust regression (Huber),
 
-Median quantile regression,
+Median quantile regression
 
 
-For income decile analysis:
+**Income Decile Evaluation:**
 
 ANOVA,
 
@@ -67,7 +62,7 @@ Spearman rank trend test,
 Monthly and seasonal regressions
 
 
-Comparison of lowest and highest quintiles (extreme bin comparison) using:
+**Extreme Quintile Comparison:**
 
 Welch’s t-test,
 
@@ -79,6 +74,6 @@ Bootstrap confidence intervals
 
 ## Usage/Replication
 
-1. Create a local clone of the repository on your machine.
+1. Create a local clone of the repository.
 2. [Sign up for an AQS API key](https://aqs.epa.gov/aqsweb/documents/data_api.html#signup) and a [U.S. Census API key](https://api.census.gov/data/key_signup.html) and put them in [src/private_keys.py](https://github.com/leptio/AirHealthLink/blob/main/src/private_keys.py), alongside the e-mail used to sign up for them.
 3. Run /src/main.py.
