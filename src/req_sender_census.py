@@ -1,4 +1,6 @@
-"""Retrieves economic data for all U.S. counties using the U.S. Census API."""
+# Author: leptio
+# Description: This module retrieves economic data for all U.S. counties using the U.S. Census API.
+
 from time import sleep
 from typing import List, Dict, Any
 import pandas as pd
