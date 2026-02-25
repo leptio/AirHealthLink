@@ -1,4 +1,6 @@
-"""Runs the PM2.5 pollution analysis."""
+# Author: leptio
+# Description: This module is responsible for running the PM2.5 analysis.
+
 from typing import Any
 import os
 import pandas as pd
