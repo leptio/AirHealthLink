@@ -1,4 +1,6 @@
-"""Module responsible for generating visualization of data"""
+# Author: leptio
+# Description: This module is responsible for using matplotlib to create visual representations of data.
+
 from typing import Optional, List, Tuple, Any
 import pandas as pd
 import matplotlib
