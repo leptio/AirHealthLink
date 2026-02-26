@@ -1,7 +1,8 @@
+# Author: leptio
 """
-pm25_economic_analyzer.py
+Description:
 
-Class that performs analysis correlating daily PM2.5 (county-level, day-by-day)
+Module that performs analysis correlating daily PM2.5 (county-level, day-by-day)
 with county-level economic status (ACS variables). 
 
 Usage example:
