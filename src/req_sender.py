@@ -1,4 +1,6 @@
-"""Retrieves data through requests to the AQS API."""
+# Author: leptio
+# Description: This module is responsible for retrieving data through requests to the AQS API.
+
 from time import sleep
 from typing import List, Dict, Any
 import pandas as pd
